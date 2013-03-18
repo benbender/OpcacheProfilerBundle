@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="opcache_profiler.data_collector.opcache.class">Codepoet\OpcacheProfilerBundle\DataCollector\OpcacheDataCollector</parameter>
+    </parameters>
+
+    <services>
+        <service id="opcache_profiler.data_collector.opcache" class="%opcache_profiler.data_collector.opcache.class%" public="false">
+            <tag name="data_collector" template="CodepoetOpcacheProfilerBundle:Collector:opcache" id="opcache" />
+        </service>
+    </services>
+</container>

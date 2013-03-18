@@ -1,0 +1,136 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        <span>
+            <img width="13" height="28" alt="Memory Usage" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAcBAMAAABITyhxAAAAJ1BMVEXNzc3///////////////////////8/Pz////////////+NjY0/Pz9lMO+OAAAADHRSTlMAABAgMDhAWXCvv9e8JUuyAAAAQ0lEQVQI12MQBAMBBmLpMwoMDAw6BxjOOABpHyCdAKRzsNDp5eXl1KBh5oHBAYY9YHoDQ+cqIFjZwGCaBgSpBrjcCwCZgkUHKKvX+wAAAABJRU5ErkJggg==">
+            <span>Opcache</span>
+        </span>
+    {% endset %}
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Cached Files</b>
+            <span>{{ collector.stats.num_cached_scripts }}</span>
+        </div>
+        <div class="sf-toolbar-info-piece">
+            <b>Used Memory</b>
+            <span class="sf-toolbar-status sf-toolbar-status-{{ collector.status.cache_full ? 'red' : 'green' }}">{{ '%.1f'|format(collector.status.memory_usage.used_memory / 1024 / 1024) }} MB</span>
+        </div>
+    {% endset %}
+    {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': profiler_url } %}
+{% endblock %}
+
+{% block menu %}
+<span class="label">
+    <span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAcCAMAAAC5xgRsAAAAZlBMVEX///////////////////////////////////////////////////////////////////////////////////////////+ZmZmZmZlISEhJSUmdnZ1HR0fR0dFZWVlpaWlfX18/Pz+puygPAAAAIXRSTlMACwwlJygpLzIzNjs8QEtMUmd6e32AucDBw8fIydTm6u5l8MjvAAAAo0lEQVR42r2P2Q6CMBBFL6XsZRGRfZv//0nbDBNEE19MnJeTc5ILKf58ahiUwzy/AJpIWwREwQnEXRdbGCLjrO+djWRvVMiJcigxB7viGogxDdJpSmHEmCVPS7YczJvgUu+CS30IvtbNYZMvsGVo2mVpG/kbm4auiCpdcC3YPCAhSpAdUzaAn6qPKZtUT6ZSzb4bi2hdo9MQ1nX4ASjfV+/4/Z40pyCHrNTbIgAAAABJRU5ErkJggg==" alt="Opcache"></span>
+    <strong>Opcache</strong>
+    <span class="count">
+        <span>{{ collector.stats.num_cached_scripts }}</span>
+        <span>{{ '%.1f'|format(collector.status.memory_usage.used_memory / 1024 / 1024) }} MB</span>
+    </span>
+</span>
+{% endblock %}
+
+{% block panel %}
+    <h2>General Cache Information</h2>
+    <table>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <th>Opcache Version</th>
+            <td>{{ collector.version }}</td>
+        </tr>
+        <tr>
+            <th>Memory</th>
+            <td>{{ '%.1f'|format(collector.ini['zend_optimizerplus.memory_consumption'] / 1024 / 1024) }} MB</td>
+        </tr>
+        <tr>
+            <th>Cache By Default</th>
+            <td>{{ collector.ini['zend_optimizerplus.enable'] ? 'enabled' : 'disabled' }}</td>
+        </tr>
+        <tr>
+            <th>Cache Filled</th>
+            <td>{{ collector.status.cache_full ? 'true' : 'false' }}</td>
+        </tr>
+        <tr>
+            <th>Cached Scripts (num/max)</th>
+            <td>{{ collector.stats.num_cached_scripts }}/{{ collector.stats.max_cached_scripts }}</td>
+        </tr>
+    </table>
+
+    <h2>Memory Usage and Fragmentation</h2>
+    <table>
+        <tr>
+            <th>Key</th>
+            <th>Size</th>
+            <th>Parcent</th>
+        </tr>
+
+        <tr>
+            <th>Memory Free</th>
+            <td>{{ '%.1f'|format(collector.status.memory_usage.free_memory / 1024 / 1024) }} MB</td>
+            <td>{{ '%.1f'|format(collector.status.memory_usage.free_memory / ((collector.status.memory_usage.free_memory + collector.status.memory_usage.used_memory + collector.status.memory_usage.wasted_memory) / 100)) }}%</td>
+        </tr>
+        <tr>
+            <th>Memory Used</th>
+            <td>{{ '%.1f'|format(collector.status.memory_usage.used_memory / 1024 / 1024) }} MB</td>
+            <td>{{ '%.1f'|format(collector.status.memory_usage.used_memory / ((collector.status.memory_usage.free_memory + collector.status.memory_usage.used_memory + collector.status.memory_usage.wasted_memory) / 100)) }}%</td>
+        </tr>
+        <tr>
+            <th>Memory Wasted</th>
+            <td>{{ '%.1f'|format(collector.status.memory_usage.wasted_memory / 1024 / 1024) }} MB</td>
+            <td>{{ '%.1f'|format(collector.status.memory_usage.current_wasted_percentage) }}%</td>
+        </tr>
+        <tr>
+            <th>Hits Status</th>
+            <td>{{ collector.stats.hits }}</td>
+            <td>{{ '%.1f'|format(collector.stats.accelerator_hit_rate) }}%</td>
+        </tr>
+        <tr>
+            <th>Misses Status</th>
+            <td>{{ collector.stats.misses }}</td>
+            <td>{{ '%.1f'|format((collector.stats.misses / collector.stats.hits) * 100 ) }}%</td>
+        </tr>
+        <tr>
+            <th>Blacklist Status</th>
+            <td>{{ collector.stats.blacklist_misses }}</td>
+            <td>{{ '%.1f'|format(collector.stats.blacklist_miss_ratio) }}%</td>
+        </tr>
+    </table>
+
+    <h2>Configuration</h2>
+    <table>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+        {% for key, value in collector.ini %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{% if value == false %}0{% else %}{{ value }}{% endif %}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Cache Entries</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Hits</th>
+            <th>Size</th>
+            <th>Last accessed</th>
+            <th>Created at</th>
+        </tr>
+        {% for file in collector.filelist %}
+            <tr>
+                <td><span title="{{ file.full_path }}">{{ file.name }}</span></td>
+                <td>{{ file.hits }}</td>
+                <td>{{ '%.1f'|format(file.memory_consumption / 1024) }} KB</td>
+                <td>{{ file.last_used_timestamp|date('Y-m-d H:i:s') }}</td>
+                <td>{{ file.timestamp|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
