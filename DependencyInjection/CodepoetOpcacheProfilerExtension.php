@@ -22,7 +22,9 @@ class CodepoetOpcacheProfilerExtension extends Extension
         $configuration = new Configuration();
         $this->processConfiguration($configuration, $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('opcache.xml');
+        if (function_exists('opcache_get_status') or function_exists('accelerator_get_status')) {
+            $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+            $loader->load('opcache.xml');
+        }
     }
 }
