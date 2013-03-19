@@ -44,7 +44,7 @@
         </tr>
         <tr>
             <th>Memory</th>
-            <td>{{ '%.1f'|format(collector.status.memory_usage.used_memory / 1024 / 1024) }} MB</td>
+            <td>{{ '%.1f'|format((collector.status.memory_usage.free_memory + collector.status.memory_usage.used_memory + collector.status.memory_usage.wasted_memory) / 1024 / 1024) }} MB</td>
         </tr>
         <tr>
             <th>Cache By Default</th>
