@@ -2,7 +2,7 @@
     "name": "codepoet/opcache-profiler-bundle",
     "type": "symfony-bundle",
     "description": "Profiler for Zend Optimizer+ from pecl and ext/opcache from PHP 5.5",
-    "keywords": [ "Cache", "ZendOptimizer", "optimizer+" "Opcache", "symfony", "profiler", "toolbar" ],
+    "keywords": [ "Cache", "ZendOptimizer", "optimizer+", "Opcache", "symfony", "profiler", "toolbar" ],
     "homepage": "https://github.com/benbender/OpcacheProfilerBundle",
     "license": "MIT",
     "authors": [
