@@ -44,11 +44,13 @@ class OpcacheDataCollector extends DataCollector
             $config  = opcache_get_configuration();
             $version = $config['version']['opcache_product_name'] . ' ' . $config['version']['version'];
             $stats   = $status['opcache_statistics'];
+            $hitrate = $stats['opcache_hit_rate'];
         } elseif (function_exists('accelerator_get_status')) {
             $status  = accelerator_get_status();
             $config  = accelerator_get_configuration();
             $version = $config['version']['accelerator_product_name'] . ' ' . $config['version']['version'];
             $stats   = $status['accelerator_statistics'];
+            $hitrate = $stats['accelerator_hit_rate'];
         }
 
         $filelist = array();
@@ -60,6 +62,7 @@ class OpcacheDataCollector extends DataCollector
             }
         }
 
+        // unset unneeded filelist to lower memory-usage
         unset($status['scripts']);
 
         $this->data = array(
@@ -67,7 +70,8 @@ class OpcacheDataCollector extends DataCollector
             'ini'       => $config['directives'],
             'filelist'  => $filelist,
             'status'    => $status,
-            'stats'     => $stats
+            'stats'     => $stats,
+            'hitrate'   => $hitrate
         );
     }
 
@@ -77,6 +81,22 @@ class OpcacheDataCollector extends DataCollector
     public function getVersion()
     {
         return $this->data['version'];
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        if (isset($this->data['ini']['zend_optimizerplus.enable'])) {
+            return true;
+        }
+
+        if (isset($this->data['ini']['opcache.enable'])) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

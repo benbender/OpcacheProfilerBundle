@@ -44,11 +44,11 @@
         </tr>
         <tr>
             <th>Memory</th>
-            <td>{{ '%.1f'|format(collector.ini['zend_optimizerplus.memory_consumption'] / 1024 / 1024) }} MB</td>
+            <td>{{ '%.1f'|format(collector.status.memory_usage.used_memory / 1024 / 1024) }} MB</td>
         </tr>
         <tr>
             <th>Cache By Default</th>
-            <td>{{ collector.ini['zend_optimizerplus.enable'] ? 'enabled' : 'disabled' }}</td>
+            <td>{{ collector.enabled ? 'enabled' : 'disabled' }}</td>
         </tr>
         <tr>
             <th>Cache Filled</th>
@@ -86,7 +86,7 @@
         <tr>
             <th>Hits Status</th>
             <td>{{ collector.stats.hits }}</td>
-            <td>{{ '%.1f'|format(collector.stats.accelerator_hit_rate) }}%</td>
+            <td>{{ '%.1f'|format(collector.data.hitrate) }}%</td>
         </tr>
         <tr>
             <th>Misses Status</th>
