@@ -29,8 +29,6 @@ Add the `codepoet/opcache-profiler-bundle` package to your `require` section in 
 Usage
 -----
 
-## Usage ##
-
 Per default the listing of cached files is deactivated cause it uses much memory to keep the filelist
 available. If you want to see it anyway, put this into your `config.yml`:
 
@@ -41,11 +39,16 @@ codepoet_opcache_profiler:
 ```
 
 
-
 License
 -------
 
-This bundle is under the MIT license. See the complete license in the LICENSE:
+This bundle is under the MIT license. See [Resources/meta/LICENSE](https://github.com/benbender/OpcacheProfilerBundle/blob/master/Resources/meta/LICENSE).
+
+
+Changelog
+---------
+
+This Changelog of this bundle can be found here [Resources/meta/CHANGELOG.md](https://github.com/benbender/OpcacheProfilerBundle/blob/master/Resources/meta/CHANGELOG.md).
 
 
 Reporting an issue or a feature request
