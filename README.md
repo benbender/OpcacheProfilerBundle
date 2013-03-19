@@ -48,7 +48,7 @@ This bundle is under the MIT license. See [Resources/meta/LICENSE](https://githu
 Changelog
 ---------
 
-This Changelog of this bundle can be found here [Resources/meta/CHANGELOG.md](https://github.com/benbender/OpcacheProfilerBundle/blob/master/Resources/meta/CHANGELOG.md).
+This Changelog of this bundle can be found here: [Resources/meta/Changelog.md](https://github.com/benbender/OpcacheProfilerBundle/blob/master/Resources/meta/Changelog.md).
 
 
 Reporting an issue or a feature request
