@@ -19,12 +19,15 @@ class CodepoetOpcacheProfilerExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
-        $this->processConfiguration($configuration, $configs);
-
         if (function_exists('opcache_get_status') or function_exists('accelerator_get_status')) {
+            $configuration = new Configuration();
+            $config = $this->processConfiguration($configuration, $configs);
+
             $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
             $loader->load('opcache.xml');
+
+            var_dump($container->setParameter('codepoet_opcache_profiler.data_collector.show_filelist', $config['data_collector']['show_filelist']));
+
         }
     }
 }

@@ -18,6 +18,20 @@ class OpcacheDataCollector extends DataCollector
      */
     protected $data;
 
+    /**
+     * @var boolean
+     */
+    protected $showFilelist;
+
+    /**
+     * Constructor
+     *
+     * @param boolean $showFilelist
+     */
+    public function __construct($showFilelist = false)
+    {
+        $this->showFilelist = $showFilelist;
+    }
 
     /**
      * {@inheritDoc}
@@ -39,10 +53,16 @@ class OpcacheDataCollector extends DataCollector
 
         $filelist = array();
 
-        foreach ($status['scripts'] as $key => $data) {
-            $filelist[$key] = $data;
-            $filelist[$key]['name'] = basename($key);
+        $doScripts = false;
+
+        if ($this->showFilelist) {
+            foreach ($status['scripts'] as $key => $data) {
+                $filelist[$key] = $data;
+                $filelist[$key]['name'] = basename($key);
+            }
         }
+
+        unset($status['scripts']);
 
         $this->data = array(
             'version'   => $version,

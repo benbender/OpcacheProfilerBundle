@@ -114,6 +114,7 @@
         {% endfor %}
     </table>
 
+    {% if collector.filelist != false %}
     <h2>Cache Entries</h2>
     <table>
         <tr>
@@ -123,6 +124,7 @@
             <th>Last accessed</th>
             <th>Created at</th>
         </tr>
+
         {% for file in collector.filelist %}
             <tr>
                 <td><span title="{{ file.full_path }}">{{ file.name }}</span></td>
@@ -133,4 +135,5 @@
             </tr>
         {% endfor %}
     </table>
+    {% endif %}
 {% endblock %}

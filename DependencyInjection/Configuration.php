@@ -18,7 +18,18 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('codepoet_opcache_profiler');
+        $rootNode = $treeBuilder->root('codepoet_opcache_profiler');
+
+        $rootNode
+            ->children()
+                ->arrayNode('data_collector')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('show_filelist')->defaultFalse()->end()
+                    ->end()
+                ->end()
+            ->end();
+
 
         return $treeBuilder;
     }
