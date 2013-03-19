@@ -127,7 +127,7 @@
 
         {% for file in collector.filelist %}
             <tr>
-                <td><span title="{{ file.full_path }}">{{ file.name }}</span></td>
+                <td><abbr title="{{ file.full_path }}">{{ file.name }}</abbr></td>
                 <td>{{ file.hits }}</td>
                 <td>{{ '%.1f'|format(file.memory_consumption / 1024) }} KB</td>
                 <td>{{ file.last_used_timestamp|date('Y-m-d H:i:s') }}</td>

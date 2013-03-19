@@ -53,8 +53,6 @@ class OpcacheDataCollector extends DataCollector
 
         $filelist = array();
 
-        $doScripts = false;
-
         if ($this->showFilelist) {
             foreach ($status['scripts'] as $key => $data) {
                 $filelist[$key] = $data;

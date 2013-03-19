@@ -26,8 +26,7 @@ class CodepoetOpcacheProfilerExtension extends Extension
             $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
             $loader->load('opcache.xml');
 
-            var_dump($container->setParameter('codepoet_opcache_profiler.data_collector.show_filelist', $config['data_collector']['show_filelist']));
-
+            $container->setParameter('codepoet_opcache_profiler.data_collector.show_filelist', $config['data_collector']['show_filelist']);
         }
     }
 }

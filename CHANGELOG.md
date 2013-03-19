@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.0.1
+-----
+
+ * Small bugfixes
+
 1.0.0
 -----
 
