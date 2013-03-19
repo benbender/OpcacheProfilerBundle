@@ -131,6 +131,13 @@ class OpcacheDataCollector extends DataCollector
         return $this->data['stats'];
     }
 
+    /**
+     * @return integer
+     */
+    public function getHitrate()
+    {
+        return $this->data['hitrate'];
+    }
 
     /**
      * {@inheritDoc}
