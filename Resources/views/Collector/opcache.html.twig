@@ -54,9 +54,9 @@
             <th>Cache Filled</th>
             <td>{{ collector.status.cache_full ? 'true' : 'false' }}</td>
         </tr>
+            <th>Cached Scripts</th>
+            <td>{{ collector.stats.num_cached_scripts }}</td>
         <tr>
-            <th>Cached Scripts (num/max)</th>
-            <td>{{ collector.stats.num_cached_scripts }}/{{ collector.stats.max_cached_scripts }}</td>
         </tr>
     </table>
 
