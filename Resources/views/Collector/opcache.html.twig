@@ -142,7 +142,17 @@
         {% for key, value in collector.ini %}
         <tr>
             <td>{{ key }}</td>
-            <td>{% if value == false %}0{% else %}{{ value }}{% endif %}</td>
+            <td>
+                {% if value == false %}
+                    0
+                {% elseif key == 'opcache.memory_consumption' %}
+                    {{ '%.1f'|format(value / 1024 / 1024) }} MB
+                {% elseif key == 'opcache.max_wasted_percentage' %}
+                    {{ value * 100 ~ '%' }}
+                {% else %}
+                    {{ value }}
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </table>
