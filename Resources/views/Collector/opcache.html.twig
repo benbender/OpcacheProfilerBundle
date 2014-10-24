@@ -54,9 +54,42 @@
             <th>Cache Filled</th>
             <td>{{ collector.status.cache_full ? 'true' : 'false' }}</td>
         </tr>
+    </table>
+
+    <h2>Cache Statistics</h2>
+    <table>
         <tr>
-            <th>Cached Scripts (num/max)</th>
-            <td>{{ collector.stats.num_cached_scripts }}/{{ collector.stats.max_cached_scripts }}</td>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <th>Cached Scripts</th>
+            <td>{{ collector.stats.num_cached_scripts }}</td>
+        </tr>
+        <tr>
+            <th>Cached Keys</th>
+            <td>{{ collector.stats.num_cached_keys }}/{{ collector.stats.max_cached_keys }}</td>
+        </tr>
+        <tr>
+            <th>Start Time</th>
+            <td>{{ collector.stats.start_time|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Start Time</th>
+            {% set last_restart_time = collector.stats.last_restart_time %}
+            <td>{{ last_restart_time ? last_restart_time|date('Y-m-d H:i:s') : last_restart_time }}</td>
+        </tr>
+        <tr>
+            <th>OOM Restarts</th>
+            <td>{{ collector.stats.oom_restarts }}</td>
+        </tr>
+        <tr>
+            <th>Hash Restarts</th>
+            <td>{{ collector.stats.hash_restarts }}</td>
+        </tr>
+        <tr>
+            <th>Manual Restarts</th>
+            <td>{{ collector.stats.manual_restarts }}</td>
         </tr>
     </table>
 
@@ -65,7 +98,7 @@
         <tr>
             <th>Key</th>
             <th>Size</th>
-            <th>Parcent</th>
+            <th>Percent</th>
         </tr>
 
         <tr>
@@ -109,7 +142,17 @@
         {% for key, value in collector.ini %}
         <tr>
             <td>{{ key }}</td>
-            <td>{% if value == false %}0{% else %}{{ value }}{% endif %}</td>
+            <td>
+                {% if value == false %}
+                    0
+                {% elseif key == 'opcache.memory_consumption' %}
+                    {{ '%.1f'|format(value / 1024 / 1024) }} MB
+                {% elseif key == 'opcache.max_wasted_percentage' %}
+                    {{ value * 100 ~ '%' }}
+                {% else %}
+                    {{ value }}
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </table>
