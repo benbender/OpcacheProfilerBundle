@@ -75,7 +75,7 @@
             <td>{{ collector.stats.start_time|date('Y-m-d H:i:s') }}</td>
         </tr>
         <tr>
-            <th>Start Time</th>
+            <th>Last Restart Time</th>
             {% set last_restart_time = collector.stats.last_restart_time %}
             <td>{{ last_restart_time ? last_restart_time|date('Y-m-d H:i:s') : last_restart_time }}</td>
         </tr>
